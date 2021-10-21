@@ -2,9 +2,14 @@ const dbConfig = require("../config/db.config.js");
 
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
-  port: dbConfig.PORT,
+  host: '192.168.42.1',
+  //port: dbConfig.PORT,
   dialect: dbConfig.dialect,
+  dialectOptions: {
+    options: {
+      instanceName: dbConfig.HOST
+    }
+  },
   pool: {
     max: dbConfig.pool.max,
     min: dbConfig.pool.min,
@@ -18,6 +23,6 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.tutorials = require("./tutorial.model.js")(sequelize, Sequelize);
+db.barrios = require("./barrio.model.js")(sequelize, Sequelize);
 
 module.exports = db;

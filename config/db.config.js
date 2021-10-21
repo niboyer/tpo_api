@@ -1,8 +1,8 @@
 module.exports = {
-    HOST: "appdistribuidas.database.windows.net",
+    HOST: "SQLEXPRESS",
     PORT: "1433",
-    USER: "app",
-    PASSWORD: "Distribuidas.2020",
+    USER: "sa",
+    PASSWORD: "Arg0ntech",
     DB: "SGVECINOS",
     dialect: "mssql",
     pool: {
