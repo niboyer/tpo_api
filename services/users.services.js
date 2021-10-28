@@ -123,6 +123,8 @@ exports.crearAcceso = async function (user) {
 
 exports.accederVecino = async function (user) {
     try {
+        console.log(user)
+
         var documento = user.documento
         var condition = documento ? { documento: { [Op.eq]: `${documento}` } } : null;
         var _details = await Usuarios.findOne({ where: condition });
@@ -152,13 +154,9 @@ exports.accederVecino = async function (user) {
         } catch (e) {
             throw Error("Error del sistema al solicitar el acceso del usuario")
         }
-
-
         return { token: token, user: _details };
     } catch (e) {
-        // return a Error message describing the reason  
-        console.log(e)  
-        return e
+        throw Error("Error del sistema al solicitar el acceso del usuario")
     }
 
 }

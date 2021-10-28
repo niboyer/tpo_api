@@ -57,7 +57,7 @@ exports.verificarUsuarioActivo = async function(req, res, next){
             return res.status(404).json({status: 404, message: "Usuario no encontrado, debe primero solicitar acceso."})
 
         if(activo==="NOHABILITADO")
-            return res.status(404).json({status: 404, message: "Usuario no habilitado para el acceso."})
+            return res.status(403).json({status: 403, message: "Usuario no habilitado para el acceso."})
 
         if(activo==="CREARPASSWORD")
             return res.status(201).json({status: 201, message: "Primer inicio, cree su contraseña"})
@@ -128,6 +128,7 @@ exports.accederVecino = async function (req, res, next) {
         documento: req.body.documento,
         password: req.body.password
     }
+
     try {
         // Calling the Service function with the new object from the Request Body
         var loginUser = await UserService.accederVecino(User);
@@ -138,7 +139,7 @@ exports.accederVecino = async function (req, res, next) {
         if(loginUser==='LOGINERROR')
             return res.status(401).json({status: 401, message: "Documento o contraseña invalido"})
 
-        return res.status(201).json({loginUser, message: "Succesfully login"})
+        return res.status(200).json({loginUser, status: 200, message: "Succesfully login"})
     } catch (e) {
         //Return an Error Response Message with Code and the Error Message.
         return res.status(500).json({status: 400, message: e})
