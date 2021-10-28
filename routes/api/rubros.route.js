@@ -1,9 +1,8 @@
 var express = require('express')
 var router = express.Router()
-var BarriosController = require('../../controllers/barrios.controller');
-var Authorization = require('../../Helpers/Authorization');
+var RubrosController = require('../../controllers/rubros.controller');
 
-router.get('/',Authorization, BarriosController.findAll)
+router.get('/', RubrosController.findAll)
 /*router.get('/:id', Authorization, ProductosController.getProductoById)
 router.post('/create',Authorization, ProductosController.createProducto)
 router.delete('/:id',Authorization, ProductosController.deleteProducto)

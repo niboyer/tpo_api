@@ -105,7 +105,7 @@ else{
 
 //Database connection --
 const db = require("./models");
-db.sequelize.sync();
+//db.sequelize.sync();
 
 // catch 404 and forward to error handler 
 app.use(function (req, res, next) {

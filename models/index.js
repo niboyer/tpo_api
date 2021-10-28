@@ -1,15 +1,21 @@
 const dbConfig = require("../config/db.config.js");
 
 const Sequelize = require("sequelize");
+
+Sequelize.DATE.prototype._stringify = function _stringify(date, options) {
+  return this._applyTimezone(date, options).format('YYYY-MM-DD HH:mm:ss.SSS');
+};
+
+
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: '192.168.42.1',
-  //port: dbConfig.PORT,
+  host: dbConfig.HOST,
+  port: dbConfig.PORT,
   dialect: dbConfig.dialect,
-  dialectOptions: {
+  /*dialectOptions: {
     options: {
-      instanceName: dbConfig.HOST
+      //instanceName: dbConfig.HOST
     }
-  },
+  },*/
   pool: {
     max: dbConfig.pool.max,
     min: dbConfig.pool.min,
@@ -23,6 +29,10 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.barrios = require("./barrio.model.js")(sequelize, Sequelize);
+db.usuarios = require('./user.model.js')(sequelize, Sequelize);
+db.barrios = require('./barrio.model.js')(sequelize, Sequelize);
+db.rubros = require('./rubro.model.js')(sequelize, Sequelize);
+db.vecinos = require('./vecino.model.js')(sequelize, Sequelize);
+db.sesiones = require('./sesion.model.js')(sequelize, Sequelize);
 
 module.exports = db;
