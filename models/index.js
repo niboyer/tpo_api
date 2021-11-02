@@ -34,5 +34,7 @@ db.barrios = require('./barrio.model.js')(sequelize, Sequelize);
 db.rubros = require('./rubro.model.js')(sequelize, Sequelize);
 db.vecinos = require('./vecino.model.js')(sequelize, Sequelize);
 db.sesiones = require('./sesion.model.js')(sequelize, Sequelize);
+db.sesionesPersonal = require('./sesionPersonal.model.js')(sequelize, Sequelize);
+db.personal = require('./personal.model.js')(sequelize, Sequelize);
 
 module.exports = db;

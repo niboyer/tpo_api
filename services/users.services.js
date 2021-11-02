@@ -136,24 +136,35 @@ exports.accederVecino = async function (user) {
         if (!passwordIsValid) 
             return 'LOGINERROR'
  
+        var userId = _details.UserId
+        var condition = userId ? { userId: { [Op.eq]: `${userId}` } } : null;
+        var _sesion = await Sesiones.findOne({ where: condition });
+        console.log(_sesion)
+        var token;
 
-        const payload = {
-			check:  true
-		};
-		const token = jwt.sign(payload, _details.documento);
-
-        //guardo datos en la sesion
-        var newSesion = new Sesiones({
-            UserId: _details.UserId,
-            Token: token,
-            FechaCreacion: new Date()
-        })
+        if(!_sesion){
+            const payload = {
+                check:  true
+            };
+            token = jwt.sign(payload, _details.documento);
     
-        try {
-            var savedSesion = await newSesion.save();
-        } catch (e) {
-            throw Error("Error del sistema al solicitar el acceso del usuario")
+            //guardo datos en la sesion
+            var newSesion = new Sesiones({
+                UserId: _details.UserId,
+                Token: token,
+                FechaCreacion: new Date()
+            })
+
+            try {
+                var savedSesion = await newSesion.save();
+            } catch (e) {
+                throw Error("Error del sistema al solicitar el acceso del usuario")
+            }
+        } else {
+            console.log(_sesion.Token)
+            token = _sesion.Token
         }
+
         return { token: token, user: _details };
     } catch (e) {
         throw Error("Error del sistema al solicitar el acceso del usuario")

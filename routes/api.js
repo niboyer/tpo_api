@@ -15,6 +15,9 @@ router.use('/rubros', rubros)
 var vecinos = require('./api/vecinos.route')
 router.use('/vecinos', vecinos)
 
+var personal = require('./api/personal.route')
+router.use('/personal', personal)
+
 /*var users = require('./api/User.route')
 var productos = require('./api/Producto.route')
 var ventas = require('./api/Venta.route');
