@@ -18,8 +18,8 @@ router.use('/vecinos', vecinos)
 var personal = require('./api/personal.route')
 router.use('/personal', personal)
 
-var promociones = require('./api/promociones.route')
-router.use('/promociones', promociones)
+var publicaciones = require('./api/publicaciones.route')
+router.use('/publicaciones', publicaciones)
 
 /*var users = require('./api/User.route')
 var productos = require('./api/Producto.route')

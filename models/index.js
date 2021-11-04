@@ -36,6 +36,6 @@ db.vecinos = require('./vecino.model.js')(sequelize, Sequelize);
 db.sesiones = require('./sesion.model.js')(sequelize, Sequelize);
 db.sesionesPersonal = require('./sesionPersonal.model.js')(sequelize, Sequelize);
 db.personal = require('./personal.model.js')(sequelize, Sequelize);
-db.promociones = require('./promociones.model.js')(sequelize, Sequelize);
+db.publicaciones = require('./publicaciones.model.js')(sequelize, Sequelize);
 
 module.exports = db;

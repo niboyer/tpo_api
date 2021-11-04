@@ -1,10 +1,11 @@
 const { Router } = require('express');
 var express = require('express')
 var router = express.Router()
-var PromocionesController = require('../../controllers/promociones.controller');
+var PublicacionesController = require('../../controllers/publicaciones.controller');
 
 
-router.post('/getPromocionesByTipo',PromocionesController.getPromocionesByTipo)
+router.get('/getPublicaciones',PublicacionesController.getPublicacionesByTipo)
+router.post('/createPublicacion',PublicacionesController.createPublicacion)
 /*router.get('/:id', Authorization, ProductosController.getProductoById)
 router.post('/create',Authorization, ProductosController.createProducto)
 router.delete('/:id',Authorization, ProductosController.deleteProducto)

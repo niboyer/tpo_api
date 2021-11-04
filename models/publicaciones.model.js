@@ -29,7 +29,7 @@ module.exports = (sequelize, Sequelize) => {
       urlImagenes: {
         type: Sequelize.STRING
       }  ,
-      tipoServicio: {
+      tipoPublicacion: {
         type: Sequelize.STRING
       }  
     }, {
