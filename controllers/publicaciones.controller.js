@@ -17,6 +17,9 @@ exports.getPublicacionesByTipo = async function (req, res, next) {
 
 exports.createPublicacion = async function (req, res, next) {
     
+    console.log(req.files)
+    console.log(req)
+
     var newPublicacion = {
         nombre: req.body.nombre,
         horarios: req.body.horarios,
@@ -28,6 +31,8 @@ exports.createPublicacion = async function (req, res, next) {
         imageFiles: req.files,
         tipoPublicacion: req.body.tipoPublicacion
     }
+
+    console.log(newPublicacion)
 
     try {
         var createdPublicacion = await PublicacionesService.createPublicacion(newPublicacion)
