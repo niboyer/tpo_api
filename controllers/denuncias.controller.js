@@ -38,7 +38,7 @@ exports.createDenuncia = async function (req, res, next) {
     
     try {
         var createdDenuncia = await DenunciasService.createDenuncia(newDenuncia)
-        return res.status(201).json({status: 201, createdDenuncia, message: "Succesfully Created Denuncia"})
+        return res.status(200).json({status: 200, createdDenuncia, message: "Succesfully Created Denuncia"})
     } catch (e) {
         return res.status(400).json({status: 400, message: "Denuncia Creation was Unsuccesfull"})
     }
