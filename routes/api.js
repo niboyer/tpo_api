@@ -9,6 +9,9 @@ router.use('/usuarios', usuarios);
 var barrios = require('./api/barrios.route')
 router.use('/barrios', barrios)
 
+var denuncias = require('./api/denuncias.route')
+router.use('/denuncias', denuncias)
+
 var rubros = require('./api/rubros.route')
 router.use('/rubros', rubros)
 

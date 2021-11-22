@@ -1,11 +1,9 @@
 const dbConfig = require("../config/db.config.js");
-
 const Sequelize = require("sequelize");
 
 Sequelize.DATE.prototype._stringify = function _stringify(date, options) {
   return this._applyTimezone(date, options).format('YYYY-MM-DD HH:mm:ss.SSS');
 };
-
 
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
@@ -31,6 +29,23 @@ db.sequelize = sequelize;
 
 db.usuarios = require('./user.model.js')(sequelize, Sequelize);
 db.barrios = require('./barrio.model.js')(sequelize, Sequelize);
+
+db.denuncias = require('./denuncias.model.js')(sequelize, Sequelize);
+db.denunciasExtendidas = require('./denunciasExtendidas.model')(sequelize, Sequelize);
+
+db.denuncias.hasMany(db.denunciasExtendidas, {
+  as: "denunciasExtendidas",
+  foreignKey: {
+    name: 'idDenuncias'
+  }
+});
+db.denunciasExtendidas.belongsTo(db.denuncias, {
+  as: "denunciasExtendidas",
+  foreignKey: {
+    name: 'idDenuncias'
+  }
+});
+
 db.rubros = require('./rubro.model.js')(sequelize, Sequelize);
 db.vecinos = require('./vecino.model.js')(sequelize, Sequelize);
 db.sesiones = require('./sesion.model.js')(sequelize, Sequelize);

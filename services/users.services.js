@@ -16,6 +16,13 @@ exports.solicitarAcceso = async function (user) {
         return "NOVECINO";
     }
 
+    var documento = user.documento
+    var condition = documento ? { documento: { [Op.eq]: `${documento}` } } : null;
+    var usuario = await Usuarios.findOne({ where: condition });
+    if(usuario){
+        return "USUARIOEXISTENTE";
+    }
+
     var newUser = new Usuarios({
         documento: user.documento,
         password: null,

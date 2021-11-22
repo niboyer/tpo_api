@@ -2,6 +2,7 @@ module.exports = (sequelize, Sequelize) => {
     const Barrio = sequelize.define("barrios", {
       idBarrio: {
         primaryKey: true,
+        autoIncrement: true,
         type: Sequelize.INTEGER
       },
       nombre: {

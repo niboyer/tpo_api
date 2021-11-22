@@ -1,61 +1,27 @@
-const db = require("../models/");
-const Barrio = db.barrios;
-const Op = db.Sequelize.Op;
+var BarriosService = require('../services/barrios.services');
 
-// Create and Save a new Tutorial
-exports.create = (req, res) => {
-  
-};
+// Saving the context of this module inside the _the variable
+_this = this;
 
-// Retrieve all Tutorials from the database.
-/*exports.findAll = async function (req, res, next) {
-    var page = req.query.page ? req.query.page : 1
-    var limit = req.query.limit ? req.query.limit : 10;
+exports.listarBarrios = async function (req, res, next) {
     try {
-        var Barrios = await BarriosService.getBarrios({}, page, limit)
-        return res.status(201).json({status: 201, data: Productos, message: "Succesfully Products Recieved"});
+        var listaBarrios = await BarriosService.listarBarrios()
+        return res.status(200).json({status: 200, listaBarrios, message: "OK"})
     } catch (e) {
-        return res.status(400).json({status: 400, message: e.message});
+        return res.status(500).json({status: 500, message: "Error intentando obtener los datos.", messageDetail: e.message})
     }
-}*/
-
-exports.findAll = (req, res) => {
-    const nombre = req.query.nombre;
-    var condition = nombre ? { nombre: { [Op.like]: `%${nombre}%` } } : null;
-  
-    Barrio.findAll({ where: condition })
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving tutorials."
-        });
-      });
 };
 
-// Find a single Tutorial with an id
-exports.findOne = (req, res) => {
-  
-};
+exports.crearBarrio = async function (req, res, next) {
 
-// Update a Tutorial by the id in the request
-exports.update = (req, res) => {
-  
-};
+  var newBarrio = {
+      nombre: req.body.nombre
+  }
 
-// Delete a Tutorial with the specified id in the request
-exports.delete = (req, res) => {
-  
-};
-
-// Delete all Tutorials from the database.
-exports.deleteAll = (req, res) => {
-  
-};
-
-// Find all published Tutorials
-exports.findAllPublished = (req, res) => {
-  
+  try {
+      var barrioCreado = await BarriosService.crearBarrio(newBarrio)
+      return res.status(200).json({status: 200, barrioCreado, message: "OK"})
+  } catch (e) {
+      return res.status(500).json({status: 500, message: "Error intentando crear el barrio.", messageDetail: e.message})
+  }
 };

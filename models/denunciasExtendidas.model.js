@@ -1,24 +1,17 @@
+const { denuncias } = require(".");
+
 module.exports = (sequelize, Sequelize) => {
-    const Denuncia = sequelize.define("denuncias", {
-      idDenuncias: {
+    const DenunciaExtendida = sequelize.define("denunciasExtendidas", {
+      idDenunciasExtendidas: {
         primaryKey: true,
         autoIncrement: true,
         type: Sequelize.INTEGER
       },
-      documento:{
+      descripcionDenunciado: {
         type: Sequelize.STRING
-      },
-      idSitio: {
-        type: Sequelize.INTEGER
       }, 
-      descripcion: {
+      urlImagenes: {
         type: Sequelize.STRING
-      },
-      estado: {
-        type: Sequelize.STRING
-      },
-      aceptaResponsabilidad: {
-        type: Sequelize.INTEGER
       }
     }, {
       id: false,
@@ -33,6 +26,7 @@ module.exports = (sequelize, Sequelize) => {
 
       freezeTableName: true,
     });
-  
-    return Denuncia;
+    
+    return DenunciaExtendida;
   };
+

@@ -1,5 +1,6 @@
 const db = require("../models");
 const Denuncias = db.denuncias;
+const DenunciasExtendidas = db.denunciasExtendidas;
 const Op = db.Sequelize.Op;
 const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier')
@@ -12,10 +13,19 @@ cloudinary.config({
 });
 
 exports.getDenunciasByID = async function (id) {
-    var condition = id ? { idDenuncia: { [Op.eq]: `${id}` } } : null;
-    
     try {
-        var _denuncias = await Denuncias.findAll({ where: condition });
+        var _denuncias = await Denuncias.findByPk(id, { include: ["denunciasExtendidas"] });
+        return _denuncias;
+    } catch (e) {
+        throw Error('Error de servicio: ' + e.message)
+    }    
+}
+
+exports.getDenunciasByDocumento = async function (documento) {
+    var condition = documento ? { documento: { [Op.eq]: `${documento}` } } : null;
+
+    try {
+        var _denuncias = await Denuncias.findAll({ where: condition, include: ["denunciasExtendidas"] });
         return _denuncias;
     } catch (e) {
         throw Error('Error de servicio: ' + e.message)
@@ -24,7 +34,7 @@ exports.getDenunciasByID = async function (id) {
 
 exports.createDenuncia = async function (denuncia) {
     let imageFiles = denuncia.imageFiles;
-    let urlImagen = '';
+    let urlImagen = [];
     try {
         if (imageFiles !== null) {
             if (imageFiles.files.length !== undefined) {
@@ -45,7 +55,7 @@ exports.createDenuncia = async function (denuncia) {
                     };
 
                     let result = await streamUpload(imageFiles, i);
-                    urlImagen = urlImagen + '|' + result.url;
+                    urlImagen.push(result.url);
                 }
             } else {
                 let streamUpload = (imageFiles) => {
@@ -64,27 +74,33 @@ exports.createDenuncia = async function (denuncia) {
                 };
 
                 let result = await streamUpload(imageFiles);
-                urlImagen = urlImagen + '|' + result.url;
+                urlImagen.push(result.url);
             }
         }
 
         var newDenuncia = new Denuncias({
-            nombre: publicacion.nombre,
-            direccion1: publicacion.direccion1,
-            direccion2: publicacion.direccion2,
-            motivo: publicacion.motivo,
-            descripcion: publicacion.descripcion,
-            urlImagenes: urlImagen,
-            estado: publicacion.estado,
-            denunciante: publicacion.denunciante,
-            
+            documento: denuncia.documento,
+            idSitio: denuncia.idSitio,
+            descripcion: denuncia.descripcion,
+            estado: "Pendiente de Revision",
+            aceptaResponsabilidad: 1
         })
-
 
         var savedDenuncia = await newDenuncia.save();
 
+        urlImagen.forEach(async function(elemento, indice, array) {
+            var newDenunciaExtendida = new DenunciasExtendidas({
+                idDenuncias: savedDenuncia.idDenuncias,
+                descripcionDenunciado: denuncia.descripcionDenunciado,
+                urlImagenes: elemento,
+           });
+   
+           var savedDenunciaExtendida = await newDenunciaExtendida.save();
+        })       
+
         return savedDenuncia;
     } catch (e) {
-        throw Error('Error creando la denuncia: ' + e)
+        console.log(e.message)
+        throw Error('Error creando la denuncia: ' + e.message)
     }
 }

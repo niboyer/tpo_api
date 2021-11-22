@@ -1,6 +1,5 @@
-var DenunciasService = require('../services/denuncias.service');
+var DenunciasService = require('../services/denuncias.services');
 
-// Saving the context of this module inside the _the variable
 _this = this;
 
 exports.getDenunciasByID = async function (req, res, next) {
@@ -8,7 +7,17 @@ exports.getDenunciasByID = async function (req, res, next) {
 
     try {
         var _denuncias = await DenunciasService.getDenunciasByID(id)
-        console.log(_denuncias)
+        return res.status(200).json({_denuncias, message: "OK"})
+    } catch (e) {
+        return res.status(400).json({status: 400, message: "Error intentando obtener los datos.", messageDetail: e.message})
+    }
+};
+
+exports.getDenunciasByDocumento = async function (req, res, next) {
+    var documento = req.query.documento
+
+    try {
+        var _denuncias = await DenunciasService.getDenunciasByDocumento(documento)
         return res.status(200).json({_denuncias, message: "OK"})
     } catch (e) {
         return res.status(400).json({status: 400, message: "Error intentando obtener los datos.", messageDetail: e.message})
@@ -16,23 +25,17 @@ exports.getDenunciasByID = async function (req, res, next) {
 };
 
 exports.createDenuncia = async function (req, res, next) {
-    
-    console.log(req.files)
-    console.log(req)
 
     var newDenuncia = {
-        nombre: req.body.nombre,
-        direccion1: req.body.direccion1,
-        direccion2: req.body.direccion2,
-        motivo: req.body.motivo,
+        documento: req.body.documento,
+        idSitio: req.body.idSitio,
         descripcion: req.body.descripcion,
         imageFiles: req.files,
         estado: 'creada', 
-        denunciante: req.body.denunciante
+        aceptaResponsabilidad: req.body.aceptaResponsabilidad,
+        descripcionDenunciado: req.body.descripcionDenunciado
     }
-
-    console.log(newDenuncia)
-
+    
     try {
         var createdDenuncia = await DenunciasService.createDenuncia(newDenuncia)
         return res.status(201).json({status: 201, createdDenuncia, message: "Succesfully Created Denuncia"})
