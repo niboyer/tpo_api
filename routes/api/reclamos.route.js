@@ -5,7 +5,7 @@ var ReclamosController = require('../../controllers/reclamos.controller');
 
 
 router.get('/getReclamosByTipo',ReclamosController.getReclamosByTipo)
-router.get('/getReclamosByUsuario',ReclamosController.getReclamosByUsuario)
+router.get('/getReclamosByDocumento',ReclamosController.getReclamosByDocumento)
 router.post('/createReclamo',ReclamosController.createReclamo)
 /*router.get('/:id', Authorization, ProductosController.getProductoById)
 router.post('/create',Authorization, ProductosController.createProducto)

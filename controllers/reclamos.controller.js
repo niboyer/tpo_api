@@ -15,11 +15,11 @@ exports.getReclamosByTipo = async function (req, res, next) {
     }
 };
 
-exports.getReclamosByUsuario = async function (req, res, next) {
-    var usuario = req.query.usuario
+exports.getReclamosByDocumento = async function (req, res, next) {
+    var documento = req.query.documento
 
     try {
-        var _reclamos = await ReclamosService.getReclamosByUsuario(usuario)
+        var _reclamos = await ReclamosService.getReclamosByDocumento(documento)
         console.log(_reclamos)
         return res.status(200).json({_reclamos, message: "OK"})
     } catch (e) {
@@ -38,7 +38,8 @@ exports.createReclamo = async function (req, res, next) {
         tipo: req.body.tipo,
         descripcion: req.body.descripcion,
         imageFiles: req.files,
-        usuario: req.body.usuario
+        documento: req.body.documento,
+        estado: 'creada'
     }
 
     console.log(newReclamo)
