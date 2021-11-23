@@ -22,8 +22,8 @@ exports.getReclamosByTipo = async function (tipo) {
     }    
 }
 
-exports.getReclamosByUsuario = async function (usuario) {
-    var condition = usuario ? { usuario: { [Op.eq]: `${usuario}` } } : null;
+exports.getReclamosByDocumento = async function (documento) {
+    var condition = documento ? { documento: { [Op.eq]: `${documento}` } } : null;
     
     try {
         var _reclamos = await Reclamos.findAll({ where: condition });
@@ -80,12 +80,13 @@ exports.createReclamo = async function (reclamo) {
         }
 
         var newReclamo = new Reclamos({
-            direccion1: publicacion.direccion1,
-            direccion2: publicacion.direccion2,
-            tipo: publicacion.tipo,
-            descripcion: publicacion.descripcion,
+            direccion1: reclamo.direccion1,
+            direccion2: reclamo.direccion2,
+            tipo: reclamo.tipo,
+            descripcion: reclamo.descripcion,
             urlImagenes: urlImagen,
-            usuario: publicacion.usuario
+            documento: reclamo.documento,
+            estado: "Pendiente de Revision",
         })
 
 

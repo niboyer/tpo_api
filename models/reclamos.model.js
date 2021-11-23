@@ -20,9 +20,12 @@ module.exports = (sequelize, Sequelize) => {
       urlImagenes: {
         type: Sequelize.STRING
       }  ,
-      usuario: {
+      documento: {
         type: Sequelize.STRING
-      }
+      },
+      estado: {
+        type: Sequelize.STRING
+      },
     }, {
       id: false,
       // don't add the timestamp attributes (updatedAt, createdAt)
