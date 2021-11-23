@@ -12,6 +12,9 @@ module.exports = (sequelize, Sequelize) => {
       }, 
       urlImagenes: {
         type: Sequelize.STRING
+      },
+      documentoDenunciado: {
+        type: Sequelize.STRING
       }
     }, {
       id: false,

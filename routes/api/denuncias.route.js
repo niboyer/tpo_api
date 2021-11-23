@@ -6,6 +6,7 @@ var DenunciasController = require('../../controllers/denuncias.controller');
 
 router.get('/getDenunciasByID',DenunciasController.getDenunciasByID)
 router.get('/getDenunciasByDocumento',DenunciasController.getDenunciasByDocumento)
+router.get('/getDenunciasByDocumentoDenunciado',DenunciasController.getDenunciasByDocumentoDenunciado)
 router.post('/createDenuncia',DenunciasController.createDenuncia)
 
 // Export the Router

@@ -32,6 +32,17 @@ exports.getDenunciasByDocumento = async function (documento) {
     }    
 }
 
+exports.getDenunciasByDocumentoDenunciado = async function (documento) {
+    var condition = documento ? { '$denunciasExtendidas.documentoDenunciado$': { [Op.eq]: `${documento}` } } : null;
+
+    try {
+        var _denuncias = await Denuncias.findAll({ where: condition, include: ["denunciasExtendidas"] });
+        return _denuncias;
+    } catch (e) {
+        throw Error('Error de servicio: ' + e.message)
+    }    
+}
+
 exports.createDenuncia = async function (denuncia) {
     let imageFiles = denuncia.imageFiles;
     let urlImagen = [];

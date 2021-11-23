@@ -24,6 +24,17 @@ exports.getDenunciasByDocumento = async function (req, res, next) {
     }
 };
 
+exports.getDenunciasByDocumentoDenunciado = async function (req, res, next) {
+    var documento = req.query.documento
+
+    try {
+        var _denuncias = await DenunciasService.getDenunciasByDocumentoDenunciado(documento)
+        return res.status(200).json({_denuncias, message: "OK"})
+    } catch (e) {
+        return res.status(400).json({status: 400, message: "Error intentando obtener los datos.", messageDetail: e.message})
+    }
+};
+
 exports.createDenuncia = async function (req, res, next) {
 
     var newDenuncia = {
@@ -31,7 +42,6 @@ exports.createDenuncia = async function (req, res, next) {
         idSitio: req.body.idSitio,
         descripcion: req.body.descripcion,
         imageFiles: req.files,
-        estado: 'creada', 
         aceptaResponsabilidad: req.body.aceptaResponsabilidad,
         descripcionDenunciado: req.body.descripcionDenunciado
     }
