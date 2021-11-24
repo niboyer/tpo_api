@@ -1,25 +1,19 @@
 module.exports = (sequelize, Sequelize) => {
-    const Reclamo = sequelize.define("reclamos", {
-      idReclamo: {
+    const MovimientosDenuncia = sequelize.define("movimientosDenuncia", {
+      idMovimiento: {
         primaryKey: true,
         autoIncrement: true,
         type: Sequelize.INTEGER
       },
-      documento: {
+      responsable: {
+        type: Sequelize.STRING
+      }, 
+      causa: {
         type: Sequelize.STRING
       },
-      idSitio: {
-        type: Sequelize.INTEGER
-      },
-      idDesperfecto: {
-        type: Sequelize.INTEGER
-      },
-      descripcion: {
-        type: Sequelize.STRING
-      },      
-      estado: {
-        type: Sequelize.STRING
-      },
+      fecha: {
+        type: Sequelize.DATE
+      }
     }, {
       id: false,
       // don't add the timestamp attributes (updatedAt, createdAt)
@@ -33,6 +27,7 @@ module.exports = (sequelize, Sequelize) => {
 
       freezeTableName: true,
     });
-  
-    return Reclamo;
+    
+    return MovimientosDenuncia;
   };
+

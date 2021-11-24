@@ -1,23 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
-    const Reclamo = sequelize.define("reclamos", {
-      idReclamo: {
+    const ReclamosExtendida = sequelize.define("reclamosExtendidas", {
+      idReclamosExtendidas: {
         primaryKey: true,
         autoIncrement: true,
         type: Sequelize.INTEGER
       },
-      documento: {
-        type: Sequelize.STRING
-      },
-      idSitio: {
-        type: Sequelize.INTEGER
-      },
-      idDesperfecto: {
-        type: Sequelize.INTEGER
-      },
-      descripcion: {
-        type: Sequelize.STRING
-      },      
-      estado: {
+      urlImagenes: {
         type: Sequelize.STRING
       },
     }, {
@@ -33,6 +21,7 @@ module.exports = (sequelize, Sequelize) => {
 
       freezeTableName: true,
     });
-  
-    return Reclamo;
+    
+    return ReclamosExtendida;
   };
+

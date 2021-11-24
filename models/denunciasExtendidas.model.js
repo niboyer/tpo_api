@@ -1,5 +1,3 @@
-const { denuncias } = require(".");
-
 module.exports = (sequelize, Sequelize) => {
     const DenunciaExtendida = sequelize.define("denunciasExtendidas", {
       idDenunciasExtendidas: {

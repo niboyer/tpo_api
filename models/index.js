@@ -27,12 +27,11 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.usuarios = require('./user.model.js')(sequelize, Sequelize);
 db.barrios = require('./barrio.model.js')(sequelize, Sequelize);
 
 db.denuncias = require('./denuncias.model.js')(sequelize, Sequelize);
-db.denunciasExtendidas = require('./denunciasExtendidas.model')(sequelize, Sequelize);
 
+db.denunciasExtendidas = require('./denunciasExtendidas.model')(sequelize, Sequelize);
 db.denuncias.hasMany(db.denunciasExtendidas, {
   as: "denunciasExtendidas",
   foreignKey: {
@@ -46,10 +45,70 @@ db.denunciasExtendidas.belongsTo(db.denuncias, {
   }
 });
 
+db.desperfectos = require('./desperfectos.model.js')(sequelize, Sequelize);
+
+db.movimientosDenuncia = require('./movimientosDenuncia.model.js')(sequelize, Sequelize);
+db.denuncias.hasMany(db.movimientosDenuncia, {
+  as: "movimientosDenuncia",
+  foreignKey: {
+    name: 'idDenuncia'
+  }
+});
+db.movimientosDenuncia.belongsTo(db.denuncias, {
+  as: "movimientosDenuncia",
+  foreignKey: {
+    name: 'idDenuncia'
+  }
+});
+
+db.reclamos = require('./reclamos.model.js')(sequelize, Sequelize);
+db.reclamos.hasMany(db.reclamos, {
+  as: "children",
+  foreignKey: {
+    name: 'IdReclamoUnificado'
+  }
+});
+db.reclamos.belongsTo(db.reclamos, {
+  as: "parent",
+  foreignKey: {
+    name: 'IdReclamoUnificado'
+  }
+});
+
+db.movimientosReclamo = require('./movimientosReclamo.model.js')(sequelize, Sequelize);
+db.reclamos.hasMany(db.movimientosReclamo, {
+  as: "movimientosReclamo",
+  foreignKey: {
+    name: 'idReclamo'
+  }
+});
+db.movimientosReclamo.belongsTo(db.reclamos, {
+  as: "movimientosReclamo",
+  foreignKey: {
+    name: 'idReclamo'
+  }
+});
+
+db.reclamosExtendidas = require('./reclamosExtendidas.model.js')(sequelize, Sequelize);
+db.reclamos.hasMany(db.reclamosExtendidas, {
+  as: "reclamosExtendidas",
+  foreignKey: {
+    name: 'idReclamo'
+  }
+});
+db.reclamosExtendidas.belongsTo(db.reclamos, {
+  as: "reclamosExtendidas",
+  foreignKey: {
+    name: 'idReclamo'
+  }
+});
+
 db.rubros = require('./rubro.model.js')(sequelize, Sequelize);
-db.vecinos = require('./vecino.model.js')(sequelize, Sequelize);
 db.sesiones = require('./sesion.model.js')(sequelize, Sequelize);
 db.sesionesPersonal = require('./sesionPersonal.model.js')(sequelize, Sequelize);
+db.sitios = require('./sitios.model.js')(sequelize, Sequelize);
+db.usuarios = require('./user.model.js')(sequelize, Sequelize);
+db.vecinos = require('./vecino.model.js')(sequelize, Sequelize);
 db.personal = require('./personal.model.js')(sequelize, Sequelize);
 db.publicaciones = require('./publicaciones.model.js')(sequelize, Sequelize);
 
