@@ -24,6 +24,10 @@ router.use('/personal', personal)
 var publicaciones = require('./api/publicaciones.route')
 router.use('/publicaciones', publicaciones)
 
+
+var sitios = require('./api/sitios.route')
+router.use('/sitios', sitios)
+
 /*var users = require('./api/User.route')
 var productos = require('./api/Producto.route')
 var ventas = require('./api/Venta.route');

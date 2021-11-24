@@ -30,10 +30,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING
       }  ,
       apertura: {
-        type: Sequelize.TIME
+        type: Sequelize.TIME,
       }  ,
       cierre: {
-        type: Sequelize.TIME
+        type: Sequelize.TIME,
       }  ,
       comentarios: {
         type: Sequelize.STRING
