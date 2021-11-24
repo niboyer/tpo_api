@@ -1,46 +1,13 @@
-const db = require("../models/");
-const Sitios = db.sitios;
-const Op = db.Sequelize.Op;
+var SitiosService = require('../services/sitios.services');
 
-// Create and Save a new Tutorial
-exports.create = (req, res) => {
-  
-};
+// Saving the context of this module inside the _the variable
+_this = this;
 
-exports.findAll = (req, res) => {
-    Sitios.findAll()
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving sitios."
-        });
-      });
-};
-
-// Find a single Tutorial with an id
-exports.findOne = (req, res) => {
-  
-};
-
-// Update a Tutorial by the id in the request
-exports.update = (req, res) => {
-  
-};
-
-// Delete a Tutorial with the specified id in the request
-exports.delete = (req, res) => {
-  
-};
-
-// Delete all Tutorials from the database.
-exports.deleteAll = (req, res) => {
-  
-};
-
-// Find all published Tutorials
-exports.findAllPublished = (req, res) => {
-  
+exports.listarSitios = async function (req, res, next) {
+    try {
+        var listarSitios = await SitiosService.listarSitios()
+        return res.status(200).json({status: 200, listarSitios, message: "OK"})
+    } catch (e) {
+        return res.status(500).json({status: 500, message: "Error intentando obtener los datos.", messageDetail: e.message})
+    }
 };
