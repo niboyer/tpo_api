@@ -112,4 +112,20 @@ db.vecinos = require('./vecino.model.js')(sequelize, Sequelize);
 db.personal = require('./personal.model.js')(sequelize, Sequelize);
 db.publicaciones = require('./publicaciones.model.js')(sequelize, Sequelize);
 
+db.reclamos.hasOne(db.sitios,{
+  as: "sitio",
+  foreignKey: {
+    name: 'idSitio'
+  },
+  sourceKey: 'idSitio'
+});
+
+db.reclamos.hasOne(db.desperfectos,{
+  as: "desperfecto",
+  foreignKey: {
+    name: 'idDesperfecto'
+  },
+  sourceKey: 'idDesperfecto'
+});
+
 module.exports = db;

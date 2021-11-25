@@ -4,7 +4,7 @@ var router = express.Router()
 var ReclamosController = require('../../controllers/reclamos.controller');
 
 
-router.get('/getReclamosByTipo',ReclamosController.getReclamosByTipo)
+router.get('/getReclamosByDesperfecto',ReclamosController.getReclamosByDesperfecto)
 router.get('/getReclamosByDocumento',ReclamosController.getReclamosByDocumento)
 router.post('/createReclamo',ReclamosController.createReclamo)
 /*router.get('/:id', Authorization, ProductosController.getProductoById)

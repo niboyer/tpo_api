@@ -12,11 +12,11 @@ cloudinary.config({
     secure: true
 });
 
-exports.getReclamosByTipo = async function (tipo) {
-    var condition = tipo ? { tipo: { [Op.eq]: `${tipo}` } } : null;
+exports.getReclamosByDesperfecto = async function (idDesperfecto) {
+    var condition = idDesperfecto ? { idDesperfecto: { [Op.eq]: `${idDesperfecto}` } } : null;
     
     try {
-        var _reclamos = await Reclamos.findAll({ where: condition });
+        var _reclamos = await Reclamos.findAll({ where: condition, include: ["reclamosExtendidas","parent","sitio","desperfecto"] });
         return _reclamos;
     } catch (e) {
         throw Error('Error de servicio: ' + e.message)
@@ -27,7 +27,7 @@ exports.getReclamosByDocumento = async function (documento) {
     var condition = documento ? { documento: { [Op.eq]: `${documento}` } } : null;
     
     try {
-        var _reclamos = await Reclamos.findAll({ where: condition });
+        var _reclamos = await Reclamos.findAll({ where: condition, include: ["reclamosExtendidas","parent","sitio","desperfecto"] });
         return _reclamos;
     } catch (e) {
         throw Error('Error de servicio: ' + e.message)

@@ -3,15 +3,14 @@ var ReclamosService = require('../services/reclamos.service');
 // Saving the context of this module inside the _the variable
 _this = this;
 
-exports.getReclamosByTipo = async function (req, res, next) {
-    var tipo = req.query.tipo
+exports.getReclamosByDesperfecto = async function (req, res, next) {
+    var desperfecto = req.query.idDesperfecto
 
     try {
-        var _reclamos = await ReclamosService.getReclamosByTipo(tipo)
-        console.log(_reclamos)
-        return res.status(200).json({_reclamos, message: "OK"})
+        var _reclamos = await ReclamosService.getReclamosByDesperfecto(desperfecto)
+        return res.status(200).json({status: 200, message: "OK", _reclamos })
     } catch (e) {
-        return res.status(400).json({status: 400, message: "Error intentando obtener los datos.", messageDetail: e.message})
+        return res.status(500).json({status: 500, message: "Error intentando obtener los datos.", messageDetail: e.message})
     }
 };
 
@@ -20,10 +19,9 @@ exports.getReclamosByDocumento = async function (req, res, next) {
 
     try {
         var _reclamos = await ReclamosService.getReclamosByDocumento(documento)
-        console.log(_reclamos)
-        return res.status(200).json({_reclamos, message: "OK"})
+        return res.status(200).json({status: 200, message: "OK", _reclamos })
     } catch (e) {
-        return res.status(400).json({status: 400, message: "Error intentando obtener los datos.", messageDetail: e.message})
+        return res.status(500).json({status: 500, message: "Error intentando obtener los datos.", messageDetail: e.message})
     }
 };
 
