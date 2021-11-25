@@ -120,6 +120,14 @@ db.reclamos.hasOne(db.sitios,{
   sourceKey: 'idSitio'
 });
 
+db.denuncias.hasOne(db.sitios,{
+  as: "sitio",
+  foreignKey: {
+    name: 'idSitio'
+  },
+  sourceKey: 'idSitio'
+});
+
 db.reclamos.hasOne(db.desperfectos,{
   as: "desperfecto",
   foreignKey: {

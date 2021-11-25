@@ -28,7 +28,7 @@ exports.getMovimientosByIdDenuncia = async function (idDenuncia) {
 
 exports.getDenunciasByID = async function (id) {
     try {
-        var _denuncias = await Denuncias.findByPk(id, { include: ["denunciasExtendidas"] });
+        var _denuncias = await Denuncias.findByPk(id, { include: ["denunciasExtendidas","sitio","movimientosDenuncia"] });
         return _denuncias;
     } catch (e) {
         throw Error('Error de servicio: ' + e.message)
@@ -39,7 +39,7 @@ exports.getDenunciasByDocumento = async function (documento) {
     var condition = documento ? { documento: { [Op.eq]: `${documento}` } } : null;
 
     try {
-        var _denuncias = await Denuncias.findAll({ where: condition, include: ["denunciasExtendidas"] });
+        var _denuncias = await Denuncias.findAll({ where: condition, include: ["denunciasExtendidas","sitio","movimientosDenuncia"] });
         return _denuncias;
     } catch (e) {
         throw Error('Error de servicio: ' + e.message)
@@ -50,7 +50,7 @@ exports.getDenunciasByDocumentoDenunciado = async function (documento) {
     var condition = documento ? { '$denunciasExtendidas.documentoDenunciado$': { [Op.eq]: `${documento}` } } : null;
 
     try {
-        var _denuncias = await Denuncias.findAll({ where: condition, include: ["denunciasExtendidas"] });
+        var _denuncias = await Denuncias.findAll({ where: condition, include: ["denunciasExtendidas","sitio","movimientosDenuncia"] });
         return _denuncias;
     } catch (e) {
         throw Error('Error de servicio: ' + e.message)
