@@ -35,6 +35,17 @@ exports.getDenunciasByDocumentoDenunciado = async function (req, res, next) {
     }
 };
 
+exports.getMovimientosByIdDenuncia = async function (req, res, next) {
+    var idDenuncia = req.query.idDenuncia
+
+    try {
+        var _denuncias = await DenunciasService.getMovimientosByIdDenuncia(idDenuncia)
+        return res.status(200).json({status: 200, message: "OK", _denuncias })
+    } catch (e) {
+        return res.status(500).json({status: 500, message: "Error intentando obtener los datos.", messageDetail: e.message})
+    }
+};
+
 exports.createDenuncia = async function (req, res, next) {
 
     var newDenuncia = {

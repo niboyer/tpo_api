@@ -8,6 +8,7 @@ router.get('/getDenunciasByID',DenunciasController.getDenunciasByID)
 router.get('/getDenunciasByDocumento',DenunciasController.getDenunciasByDocumento)
 router.get('/getDenunciasByDocumentoDenunciado',DenunciasController.getDenunciasByDocumentoDenunciado)
 router.post('/createDenuncia',DenunciasController.createDenuncia)
+router.get('/getMovimientosByIdDenuncia', DenunciasController.getMovimientosByIdDenuncia);
 
 // Export the Router
 module.exports = router;

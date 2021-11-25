@@ -1,6 +1,7 @@
 const db = require("../models");
 const Denuncias = db.denuncias;
 const DenunciasExtendidas = db.denunciasExtendidas;
+const MovimientosDenuncia = db.movimientosDenuncia;
 const Op = db.Sequelize.Op;
 const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier')
@@ -11,6 +12,19 @@ cloudinary.config({
     api_secret: '-llUzX9C4sCAnOz3BWObuRtH344',
     secure: true
 });
+
+
+
+exports.getMovimientosByIdDenuncia = async function (idDenuncia) {
+    var condition = idDenuncia ? { idDenuncia: { [Op.eq]: `${idDenuncia}`}} : null;
+    
+    try {
+        var _denuncias = await MovimientosDenuncia.findAll({ where: condition});
+        return _denuncias;
+    } catch (e) {
+        throw Error('Error de servicio: ' + e.message)
+    }    
+}
 
 exports.getDenunciasByID = async function (id) {
     try {
