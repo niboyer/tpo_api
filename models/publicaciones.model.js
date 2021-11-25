@@ -31,7 +31,13 @@ module.exports = (sequelize, Sequelize) => {
       }  ,
       tipoPublicacion: {
         type: Sequelize.STRING
-      }  
+      },
+      estado: {
+          type: Sequelize.STRING
+      },
+      documento: {
+        type: Sequelize.STRING
+      },  
     }, {
       id: false,
       // don't add the timestamp attributes (updatedAt, createdAt)

@@ -12,7 +12,7 @@ cloudinary.config({
 });
 
 exports.getPublicacionesByTipo = async function (tipo) {
-    var condition = tipo ? { tipoPublicacion: { [Op.eq]: `${tipo}` } } : null;
+    var condition = tipo ? { tipoPublicacion: { [Op.eq]: `${tipo}` }, estado: { [Op.eq]: 'Aceptada' } } : null;
     
     try {
         var _publicaciones = await Publicaciones.findAll({ where: condition });
