@@ -1,5 +1,6 @@
 const db = require("../models");
 const Reclamos = db.reclamos;
+const ReclamosExtendidas = db.reclamosExtendidas;
 const Op = db.Sequelize.Op;
 const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier')
@@ -35,7 +36,7 @@ exports.getReclamosByDocumento = async function (documento) {
 
 exports.createReclamo = async function (reclamo) {
     let imageFiles = reclamo.imageFiles;
-    let urlImagen = '';
+    let urlImagen = [];
     try {
         if (imageFiles !== null) {
             if (imageFiles.files.length !== undefined) {
@@ -56,7 +57,7 @@ exports.createReclamo = async function (reclamo) {
                     };
 
                     let result = await streamUpload(imageFiles, i);
-                    urlImagen = urlImagen + '|' + result.url;
+                    urlImagen.push(result.url);
                 }
             } else {
                 let streamUpload = (imageFiles) => {
@@ -75,22 +76,29 @@ exports.createReclamo = async function (reclamo) {
                 };
 
                 let result = await streamUpload(imageFiles);
-                urlImagen = urlImagen + '|' + result.url;
+                urlImagen.push(result.url);
             }
         }
 
         var newReclamo = new Reclamos({
-            direccion1: reclamo.direccion1,
-            direccion2: reclamo.direccion2,
-            tipo: reclamo.tipo,
+            idSitio: reclamo.idSitio,
+            idDesperfecto: reclamo.idDesperfecto,
             descripcion: reclamo.descripcion,
-            urlImagenes: urlImagen,
             documento: reclamo.documento,
             estado: "Pendiente de Revision",
         })
 
 
         var savedReclamo = await newReclamo.save();
+
+        urlImagen.forEach(async function(elemento, indice, array) {
+            var newReclamoExtendida = new ReclamosExtendidas({
+                idReclamo: savedReclamo.idReclamo,
+                urlImagenes: elemento,
+           });
+   
+           var savedReclamoExtendida = await newReclamoExtendida.save();
+        })       
 
         return savedReclamo;
     } catch (e) {

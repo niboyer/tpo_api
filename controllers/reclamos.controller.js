@@ -28,27 +28,21 @@ exports.getReclamosByDocumento = async function (req, res, next) {
 };
 
 exports.createReclamo = async function (req, res, next) {
-    
-    console.log(req.files)
-    console.log(req)
 
     var newReclamo = {
-        direccion1: req.body.direccion1,
-        direccion2: req.body.direccion2,
-        tipo: req.body.tipo,
+        idSitio: req.body.idSitio,
+        idDesperfecto: req.body.idDesperfecto,
         descripcion: req.body.descripcion,
         imageFiles: req.files,
-        documento: req.body.documento,
-        estado: 'creada'
+        documento: req.body.documento
     }
-
-    console.log(newReclamo)
 
     try {
         var createdReclamo = await ReclamosService.createReclamo(newReclamo)
-        return res.status(201).json({status: 201, createdReclamo, message: "Succesfully Created Reclamo"})
+        return res.status(200).json({status: 200, createdReclamo, message: "Succesfully Created Reclamo"})
     } catch (e) {
-        return res.status(400).json({status: 400, message: "Reclamo Creation was Unsuccesfull"})
+        console.log(e.message)
+        return res.status(500).json({status: 500, message: "Reclamo Creation was Unsuccesfull"})
     }
 };
 
