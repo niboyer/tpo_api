@@ -1,6 +1,7 @@
 const db = require("../models");
 const Reclamos = db.reclamos;
 const ReclamosExtendidas = db.reclamosExtendidas;
+const MovimientosReclamo = db.movimientosReclamo;
 const Op = db.Sequelize.Op;
 const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier')
@@ -12,11 +13,35 @@ cloudinary.config({
     secure: true
 });
 
+
+exports.getMovimientosByIdReclamo = async function (idReclamo) {
+    var condition = idReclamo ? { idReclamo: { [Op.eq]: `${idReclamo}`}} : null;
+    
+    try {
+        var _reclamos = await MovimientosReclamo.findAll({ where: condition});
+        return _reclamos;
+    } catch (e) {
+        throw Error('Error de servicio: ' + e.message)
+    }    
+}
+
+exports.getReclamosByDesperfectoAndDocumento = async function (idDesperfecto, documento) {
+    var doc = documento ? documento : ''
+    var condition = idDesperfecto ? { idDesperfecto: { [Op.eq]: `${idDesperfecto}`}, documento: { [Op.like]: `%${doc}%` }} : null;
+    
+    try {
+        var _reclamos = await Reclamos.findAll({ where: condition, include: ["reclamosExtendidas","parent","sitio","desperfecto","movimientosReclamo"] });
+        return _reclamos;
+    } catch (e) {
+        throw Error('Error de servicio: ' + e.message)
+    }    
+}
+
 exports.getReclamosByDesperfecto = async function (idDesperfecto) {
     var condition = idDesperfecto ? { idDesperfecto: { [Op.eq]: `${idDesperfecto}` } } : null;
     
     try {
-        var _reclamos = await Reclamos.findAll({ where: condition, include: ["reclamosExtendidas","parent","sitio","desperfecto"] });
+        var _reclamos = await Reclamos.findAll({ where: condition, include: ["reclamosExtendidas","parent","sitio","desperfecto","movimientosReclamo"] });
         return _reclamos;
     } catch (e) {
         throw Error('Error de servicio: ' + e.message)
@@ -27,7 +52,7 @@ exports.getReclamosByDocumento = async function (documento) {
     var condition = documento ? { documento: { [Op.eq]: `${documento}` } } : null;
     
     try {
-        var _reclamos = await Reclamos.findAll({ where: condition, include: ["reclamosExtendidas","parent","sitio","desperfecto"] });
+        var _reclamos = await Reclamos.findAll({ where: condition, include: ["reclamosExtendidas","parent","sitio","desperfecto","movimientosReclamo"] });
         return _reclamos;
     } catch (e) {
         throw Error('Error de servicio: ' + e.message)
